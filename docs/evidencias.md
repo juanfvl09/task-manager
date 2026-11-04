@@ -15,11 +15,11 @@
 
 **Proyecto:** Task Manager — Plataforma de gestión de tareas
 
-**Estudiante:** ______________________________
+**Estudiante:** Juan Felipe Valencia Ledezma
 
-**Docente:** ______________________________
+**Docente:** John Alirio Olarte Ramos
 
-**Fecha:** ______________________________
+**Fecha:** 7 de noviembre de 2026
 
 ---
 
