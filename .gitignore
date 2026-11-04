@@ -1,0 +1,23 @@
+# Dependencias y compilados
+node_modules/
+dist/
+build/
+coverage/
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Logs y temporales
+*.log
+npm-debug.log*
+logs/
+tmp/
+*.tmp
+
+# Editores y sistema operativo
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
