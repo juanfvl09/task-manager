@@ -79,7 +79,8 @@ pipeline {
     }
 
     stage('Deploy') {
-      when { branch 'main' }
+      // Solo despliega lo que llega a main (el checkout deja la rama en GIT_BRANCH como origin/main)
+      when { expression { (env.GIT_BRANCH ?: '').endsWith('/main') } }
       steps {
         // Las imágenes ya están construidas y probadas; se recrean solo los contenedores que cambiaron
         sh 'docker compose up -d --no-build --wait --wait-timeout 180'
