@@ -38,7 +38,7 @@ export class TasksService {
 
   async updateStatus(id: string, dto: UpdateTaskStatusDto): Promise<Task> {
     const task = await this.findOne(id);
-    task.status = dto.status;
+    // task.status = dto.status;  // ERROR a propósito: el estado nuevo no se guarda
     return this.tasksRepository.save(task);
   }
 
