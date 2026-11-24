@@ -1,0 +1,30 @@
+# Configuration as Code: Jenkins arranca configurado, sin asistente de instalación
+jenkins:
+  systemMessage: "Jenkins de Task Manager (Integración Continua, Entrega 2)"
+  numExecutors: 2
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "${JENKINS_ADMIN_ID:-admin}"
+          password: "${JENKINS_ADMIN_PASSWORD}"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+# El .env de la aplicación (con la clave de PostgreSQL) queda guardado en Jenkins
+# como credencial de tipo archivo; el Jenkinsfile lo pide por su id.
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - file:
+              id: "taskmanager-env"
+              scope: GLOBAL
+              description: "Variables de entorno de Task Manager (.env)"
+              fileName: ".env"
+              secretBytes: "${base64:${readFile:/run/secrets/taskmanager.env}}"
+
+unclassified:
+  location:
+    url: "http://localhost:8090/"

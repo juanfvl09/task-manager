@@ -20,8 +20,9 @@ Plataforma de gestión de tareas construida como un sistema de contenedores Dock
 14. [Prueba de balanceo de carga](#14-prueba-de-balanceo-de-carga)
 15. [Persistencia de datos](#15-persistencia-de-datos)
 16. [Ejecución del pipeline](#16-ejecución-del-pipeline)
-17. [Solución de problemas comunes](#17-solución-de-problemas-comunes)
-18. [Documentación adicional](#18-documentación-adicional)
+17. [Integración continua con Jenkins](#17-integración-continua-con-jenkins)
+18. [Solución de problemas comunes](#18-solución-de-problemas-comunes)
+19. [Documentación adicional](#19-documentación-adicional)
 
 ## 1. Descripción
 
@@ -301,7 +302,19 @@ docker run --rm taskmanager-backend-builder npm run lint
 docker compose config --quiet
 ```
 
-## 17. Solución de problemas comunes
+## 17. Integración continua con Jenkins
+
+Además del workflow de GitHub Actions, el repositorio tiene un `Jenkinsfile` para un Jenkins que corre en la misma máquina como contenedor (carpeta `jenkins/`). El pipeline revisa GitHub cada dos minutos y, con cada push a `main`, clona el código, construye las imágenes del backend, el frontend y el balanceador, corre las pruebas unitarias en un contenedor desechable, levanta un stack de prueba en el puerto 8081 para ejecutar `scripts/test-communication.sh` y, si todo pasa, despliega la aplicación en el puerto 8080.
+
+```bash
+cd jenkins
+cp .env.example .env            # definir la clave del administrador
+docker compose up -d --build    # Jenkins queda en http://localhost:8090
+```
+
+El detalle de requisitos, plugins, credenciales y etapas está en [docs/jenkins.md](docs/jenkins.md).
+
+## 18. Solución de problemas comunes
 
 **El puerto 8080 está ocupado.** Cambia `APP_PORT` en `.env` (por ejemplo `APP_PORT=8081`) y vuelve a ejecutar `docker compose up -d`.
 
@@ -317,9 +330,10 @@ docker compose config --quiet
 
 **Quiero empezar desde cero.** `docker compose down -v` elimina contenedores, red y volumen. La siguiente ejecución de `docker compose up -d --build` creará todo de nuevo.
 
-## 18. Documentación adicional
+## 19. Documentación adicional
 
 - [docs/arquitectura.md](docs/arquitectura.md): arquitectura, decisiones técnicas y resolución de nombres.
 - [docs/pruebas.md](docs/pruebas.md): procedimiento de pruebas y resultados obtenidos.
 - [docs/evidencias.md](docs/evidencias.md): base del documento de entrega con espacios para capturas.
+- [docs/jenkins.md](docs/jenkins.md): instalación de Jenkins y descripción del pipeline (Entrega 2).
 - [docs/referencias.md](docs/referencias.md): referencias en formato APA 7.

@@ -1,0 +1,3 @@
+Aquí van las CA raíz (.crt en formato PEM) de las redes que inspeccionan HTTPS.
+Se generan con exportar-ca.ps1 y no se suben al repositorio.
+Si la red no inspecciona nada, la carpeta puede quedar sin .crt.

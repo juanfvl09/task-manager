@@ -1,0 +1,25 @@
+# Ajustes para el entorno de pruebas que levanta Jenkins.
+# Se usa encima del compose principal:
+#   docker compose -p taskmanager-ci -f docker-compose.yml -f docker-compose.ci.yml up -d
+# Cambia nombres y puerto para no chocar con la aplicación desplegada en 8080.
+services:
+  nginx-lb:
+    container_name: taskmanager-ci-nginx-lb
+    ports: !override
+      - "${CI_PORT:-8081}:80"
+  frontend:
+    container_name: taskmanager-ci-frontend
+  backend-1:
+    container_name: taskmanager-ci-backend-1
+  backend-2:
+    container_name: taskmanager-ci-backend-2
+  postgres:
+    container_name: taskmanager-ci-postgres
+
+networks:
+  taskmanager-network:
+    name: taskmanager-ci-network
+
+volumes:
+  postgres-data:
+    name: taskmanager-ci-postgres-data

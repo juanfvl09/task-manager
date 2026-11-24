@@ -21,3 +21,10 @@ tmp/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Jenkins
+jenkins/.env
+jenkins/certs/*.crt
+
+# Reportes de pruebas generados por el pipeline
+reportes/
