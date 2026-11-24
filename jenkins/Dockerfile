@@ -1,9 +1,10 @@
 # Jenkins LTS (Java 21) con el cliente de Docker y los plugins que usa el pipeline de Task Manager
 FROM jenkins/jenkins:lts-jdk21
 USER root
-# Cliente Docker y plugin buildx copiados desde la imagen oficial docker:cli
+# Cliente Docker y sus plugins buildx y compose, copiados desde la imagen oficial docker:cli
 COPY --from=docker:cli /usr/local/bin/docker /usr/local/bin/docker
 COPY --from=docker:cli /usr/local/libexec/docker/cli-plugins/docker-buildx /usr/local/libexec/docker/cli-plugins/docker-buildx
+COPY --from=docker:cli /usr/local/libexec/docker/cli-plugins/docker-compose /usr/local/libexec/docker/cli-plugins/docker-compose
 # Si la red inspecciona HTTPS, sus CA raíz (certs/*.crt) van al sistema y a Java; sin .crt no pasa nada
 COPY certs/ /tmp/certs/
 RUN cp /tmp/certs/*.crt /usr/local/share/ca-certificates/ 2>/dev/null || true; \
